@@ -3,7 +3,7 @@
 var join = require('url').resolve;
 var urlParse = require('url').parse;
 var iconv = require('iconv-lite');
-var request = require('co-request').defaults({ jar: true });
+var request = require('co-request').defaults({ jar: true, followRedirect: false });
 
 module.exports = function(options) {
   options || (options = {});
