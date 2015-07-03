@@ -43,12 +43,13 @@ module.exports = function(options) {
 
     var requestThunk = request(opt);
 
+    var res;
     if (parsedBody) {
-      var res = yield requestThunk;
+      res = yield requestThunk;
     } else {
       // Is there a better way?
       // https://github.com/leukhin/co-request/issues/11
-      var res = yield pipeRequest(this.req, requestThunk);
+      res = yield pipeRequest(this.req, requestThunk);
     }
 
     this.status = res.statusCode;
@@ -105,5 +106,5 @@ function getParsedBody(ctx){
 function pipeRequest(readable, requestThunk){
   return function(cb){
     readable.pipe(requestThunk(cb));
-  }
+  };
 }
