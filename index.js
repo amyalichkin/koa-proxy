@@ -3,9 +3,9 @@
 var join = require('url').resolve;
 var urlParse = require('url').parse;
 var iconv = require('iconv-lite');
-var request = require('co-request').defaults({ jar: true, followRedirect: false });
+var request = require('co-request').defaults({jar: true, followRedirect: false});
 
-module.exports = function(options) {
+module.exports = function (options) {
   options || (options = {});
 
   if (!(options.host || options.map || options.url)) {
@@ -87,14 +87,14 @@ function ignoreQuery(url) {
   return url ? url.split('?')[0] : null;
 }
 
-function getParsedBody(ctx){
+function getParsedBody(ctx) {
   var body = ctx.request.body;
-  if (body === undefined || body === null){
+  if (body === undefined || body === null) {
     return undefined;
   }
   var contentType = ctx.request.header['content-type'];
-  if (!Buffer.isBuffer(body) && typeof body !== 'string'){
-    if (contentType.indexOf('json') !== -1){
+  if (!Buffer.isBuffer(body) && typeof body !== 'string') {
+    if (contentType.indexOf('json') !== -1) {
       body = JSON.stringify(body);
     } else {
       body = body + '';
@@ -103,8 +103,8 @@ function getParsedBody(ctx){
   return body;
 }
 
-function pipeRequest(readable, requestThunk){
-  return function(cb){
+function pipeRequest(readable, requestThunk) {
+  return function (cb) {
     readable.pipe(requestThunk(cb));
   };
 }
