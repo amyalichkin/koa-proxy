@@ -1,6 +1,7 @@
 'use strict';
 
 var join = require('url').resolve;
+var urlParse = require('url').parse;
 var iconv = require('iconv-lite');
 var request = require('co-request').defaults({ jar: true });
 
@@ -36,7 +37,9 @@ module.exports = function(options) {
       body: parsedBody
     };
     // set 'Host' header to options.host (without protocol prefix)
-    if (options.host) opt.headers.host = options.host.slice(options.host.indexOf('://')+3)
+    if (options.host) {
+      opt.headers.host = urlParse(options.host).host;
+    }
 
     var requestThunk = request(opt);
 

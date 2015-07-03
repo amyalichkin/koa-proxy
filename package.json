@@ -31,6 +31,6 @@
   "author": "popomore <sakura9515@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "make test"
+    "test": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec -t 20000"
   }
 }
