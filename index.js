@@ -76,8 +76,12 @@ function resolve(path, options) {
     return ignoreQuery(url);
   }
 
-  if (options.map && options.map[path]) {
-    path = ignoreQuery(options.map[path]);
+  if (typeof options.map === 'object') {
+    if (options.map && options.map[path]) {
+      path = ignoreQuery(options.map[path]);
+    }
+  } else if (typeof options.map === 'function') {
+    path = options.map(path);
   }
 
   return options.host ? join(options.host, path) : null;
@@ -94,7 +98,7 @@ function getParsedBody(ctx) {
   }
   var contentType = ctx.request.header['content-type'];
   if (!Buffer.isBuffer(body) && typeof body !== 'string') {
-    if (contentType.indexOf('json') !== -1) {
+    if (contentType && contentType.indexOf('json') !== -1) {
       body = JSON.stringify(body);
     } else {
       body = body + '';
